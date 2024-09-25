@@ -1,1 +1,33 @@
 # create your drupal and postgres config here, based off the last assignment
+# version isn't needed as of 2020 for docker compose CLI.
+# All 2.x and 3.x features supported
+# Docker Swarm still needs a 3.x version
+# version: '3.9'
+
+services: # containers. same as docker run
+  drupal:
+    image: custom-drupal
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      - MARIADB_PASSWORD=mypass
+      - MARIADB_USER=mariadb
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-themes:/var/www/html/themes
+      - drupal-sites:/var/www/html/sites
+  postgres:
+    image: postgres:14
+    environment:
+      - POSTGRES_PASSWORD=mypass
+      - POSTGRES_USER=mariadb
+    volumes:
+      - drupal-data:/var/lib/postgresql/data
+volumes:
+  drupal-data:
+  drupal-modules:
+  drupal-profiles:
+  drupal-themes:
+  drupal-sites:

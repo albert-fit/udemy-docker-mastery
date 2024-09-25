@@ -7,19 +7,23 @@ services: # containers. same as docker run
   drupal:
     image: drupal:9
     ports:
-      - "8080"
+      - "8080:80"
     environment:
       - POSTGRES_PASSWORD=mypass
       - POSTGRES_USER=postgres
     volumes:
-      - ./modules:/var/www/html/modules
-      - ./profiles:/var/www/html/profiles
-      - ./themes:/var/www/html/themes
-      - ./sites:/var/www/html/sites
-  
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-themes:/var/www/html/themes
+      - drupal-sites:/var/www/html/sites
   postgres:
     image: postgres:14
     environment:
       - POSTGRES_PASSWORD=mypass
       - POSTGRES_USER=postgres
 
+volumes:
+  drupal-modules:
+  drupal-profiles:
+  drupal-themes:
+  drupal-sites:
